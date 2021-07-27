@@ -6,3 +6,7 @@
 
 ## Iterable
 - `Iterable` là bất cứ cái gì loop qua được. VD: `array`, `string`
+
+## Immutable, mutable
+
+## Import, export
