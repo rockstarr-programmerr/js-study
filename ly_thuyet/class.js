@@ -5,13 +5,25 @@
  * - member (đề cập đến cả thuộc tính và phương thức)
  * - getter
  * - setter
- * - instance
- * - static member
+ * - instance/object
+ * - static member (tĩnh)
  * - extend/inherit (thừa kế)
  * - super/superclass (đề cập đến class cha)
  * - subclass (đề cập đến class con)
  * - Mixin
  */
+
+const hieu = new Person('Hieu', 24, 'Newwave');
+const trung = new Person('Trung', 25, 'Google');
+
+hieu.name  // "Hieu"
+hieu.age  // 24
+hieu.eyeCount  // 2
+
+trung.name  // "Trung"
+trung.birthYear  // 1996
+
+trung.company = 'Facebook';
 
 class Person {
     /**
@@ -56,7 +68,7 @@ class Person {
     }
 
     /**
-     * Thuộc tính static và hàm static
+     * Member static
      * Nếu như các thuộc tính, hàm bình thường luôn gắn liền với 1 instance (nghĩa là mỗi instance khác nhau
      * thì thuộc tính, hàm đó trả ra kết quả khác nhau), thì thuộc tính, hàm static không gắn liền với instance nào cả.
      * Do đó, đã static thì phải gọi từ class, ko thể gọi từ instance.
