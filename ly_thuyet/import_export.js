@@ -64,7 +64,7 @@ import Language, { number, fun } from '...';
 
 
 /**
- * Module gồm nhiều file
+ * Module gồm nhiều file (chỉ dành cho khi dùng webpack)
  *
  * Bình thường, mỗi file .js gọi là 1 module
  *
