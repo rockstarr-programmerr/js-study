@@ -63,6 +63,8 @@ function callAPI (callAPI1, callAPI2, callAPI3) {
     }, 3000);
 }
 
+// callAPI(api_1, api_2, api_3)
+
 
 /**
  * Câu hỏi 3: Viết code cho tình huống sau:
@@ -89,7 +91,7 @@ function api_2 (num) {
     let nums = [5, 6, 7, 8]
     let randomIndex = Math.floor(Math.random() * 4)
     let result = nums[randomIndex] + num
-    console.log('Result of Api 1 is: '. num)
+    console.log('Result of Api 1 is: ', num)
     console.log('Random number of Api 2 is: ', nums[randomIndex])
     console.log('Result of Api 2 is: ', result)
     console.log('------------------------------')
@@ -100,7 +102,7 @@ function api_3 (num) {
     let nums = [9, 10, 11, 12]
     let randomIndex = Math.floor(Math.random() * 4)
     let result = nums[randomIndex] + num
-    console.log('Result of Api 2 is: '. num)
+    console.log('Result of Api 2 is: ', num)
     console.log('Random number of Api 3 is: ', nums[randomIndex])
     console.log('Result of Api 3 is: ', result)
     console.log('------------------------------')
@@ -121,3 +123,5 @@ function callAPI (callAPI1, callAPI2, callAPI3) {
         callAPI3(numberOfAPI2)
     }, 3000);
 }
+
+callAPI(api_1, api_2, api_3)
