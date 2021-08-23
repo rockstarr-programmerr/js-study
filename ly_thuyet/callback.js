@@ -2,19 +2,20 @@
  * Hàm callback được truyền vào 1 hàm khác, và được gọi trong hàm đó
  */
 
-function onFinish (text) {
-    console.log('Finished!!');
-    console.log(text)
-}
+// function onFinish (text) {
+//     console.log('Finished!!');
+//     console.log(text)
+// }
 
-function callAPI (params, callback) {
-    setTimeout(function () {
-        callback('Amazing goodjob.')
-    }, 2000);
-}
+// function callAPI (params, callback) {
+//     setTimeout(function () {
+//         callback('Amazing goodjob.')
+//     }, 2000);
+// }
 
 /**
  * Câu hỏi 1: Khi chạy hàm `callAPI`, điều gì sẽ xảy ra?
+ * Sau 2 dây thì sẽ chạy hàm onFinish
  */
 
 /**
@@ -33,6 +34,32 @@ function callAPI (params, callback) {
  *      + Sau 6 giây, console hiện 'API_3 done'
  */
 
+// function api_1() {
+//   console.log('API 1 DONE!')
+// }
+// function api_2() {
+//   console.log('API 2 DONE!')
+// }
+// function api_3() {
+//   console.log('API 3 DONE!')
+// }
+
+// function callApi(api_1, api_2, api_3) {
+//   setTimeout(() => {
+//     api_1()
+//   }, 1000);
+
+//   setTimeout(() => {
+//     api_2()
+//   }, 3000);
+  
+//   setTimeout(() => {
+//     api_3()
+//   }, 6000);
+// }
+
+// callApi(api_1, api_2, api_3);
+
 /**
  * Câu hỏi 3: Viết code cho tình huống sau:
  * - Ta có những API sau:
@@ -44,3 +71,30 @@ function callAPI (params, callback) {
  *      + Gọi API_2, log ra kết quả
  *      + Gọi API_3, log ra kết quả
  */
+function api_1() {
+  let arr = [1, 2, 3, 4];
+  let key = Math.floor(Math.random() * arr.length);
+  let result = arr[key];
+  console.log(`So ngau  nhien: ${result}`);
+  return result;
+}
+function api_2() {
+  let number_api_1 = api_1();
+  let arr = [5, 6, 7, 8];
+  let key = Math.floor(Math.random() * arr.length);
+  let result = arr[key];
+  console.log(`Ket qua api 2: ${number_api_1} + ${result} = `, number_api_1 + result);
+  return number_api_1 + result;
+}
+function api_3() {
+  let number_api_2 = api_2();
+  let arr = [9, 10, 11, 12];
+  let key = Math.floor(Math.random() * arr.length);
+  let result = arr[key];
+  console.log(`Ket qua api 3: ${number_api_2} + ${result} = `, number_api_2 + result);
+}
+function test() {
+  setTimeout(api_3, 1000);
+}
+
+test();
