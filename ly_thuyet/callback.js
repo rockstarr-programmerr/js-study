@@ -39,6 +39,7 @@ function callAPI (params, callback) {
  *      + API_1: trả ra ngẫu nhiên 1 trong các số: 1, 2, 3, 4
  *      + API_2: lấy kết quả của API_1, cộng với ngẫu nhiên 1 trong các số: 5, 6, 7, 8
  *      + API_3: lấy kết quả của API_2, cộng với ngẫu nhiên 1 trong các số: 9, 10, 11, 12
+ * - Chú ý: Mỗi API đều không biết chạy hết bao lâu
  * - Việc cần làm:
  *      + Gọi API_1, log ra kết quả
  *      + Gọi API_2, log ra kết quả
