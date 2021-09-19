@@ -1,27 +1,29 @@
 /**
  * Đồng bộ và bất đồng bộ (synchronous, asynchronous)
- * 
+ *
  * Đồng bộ là chạy lần lượt từng công việc. VD: việc A chạy xong, mới bắt đầu việc B
  * Bất đồng bộ là chạy nhiều công việc cùng lúc. VD: bắt đầu việc A nhưng ko cần đợi hoàn thành, bắt đầu tiếp việc B luôn
  */
 
 /**
  * Câu hỏi 1: JS là đồng bộ hay bất đồng bộ?
+ * JS là cả đồng bộ và bất đồng bộ.
+ * Bất đồng bộ xảy ra khi dùng các hàm như setTimeout, setInterval, fetch,....
  */
 
 
 /**
  * Event loop
- * 
+ *
  * Chủ đề này khó, nếu muốn mọi người có thể tìm hiểu trước, anh sẽ giải thích sau
- * 
+ *
  * http://latentflip.com/loupe/
  */
 
 
 /**
  * Promise
- * 
+ *
  * Promise đại diện cho *kết quả* của 1 công việc sẽ được hoàn thành trong tương lai
  * *Kết quả* này có thể rơi vào 2 trường hợp:
  *      - Khi công việc thành công, *kết quả* là kết quả của công việc đó
@@ -39,7 +41,7 @@ const promise = new Promise((resolve, reject) => {
     try {
         setTimeout(() => {
             resolve('hello');
-        }, 2000)   
+        }, 2000)
     } catch (error) {
         reject(error);
     }
@@ -68,11 +70,12 @@ promise.finally(() => {
 
 /**
  * Câu hỏi 2: VD trên sẽ in ra như thế nào?
+ * Sau khi hết 2 giây thì sẽ trả ra hai chuỗi là: "hello internet" và "This is always called"
  */
 
 /**
  * Nối các callback (chaining)
- * 
+ *
  * Vì bản thân hàm .then, .catch, .finally cũng trả ra Promise,
  * nên có thể gọi chúng nối tiếp nhau
  */
@@ -103,6 +106,7 @@ promise
 
 /**
  * Câu hỏi 3: VD trên sẽ in ra như thế nào?
+ * Sau khi hết 2 giây thì sẽ trả ra là: "hello my name is Trung" và "Done!"
  */
 
 /**
@@ -130,12 +134,13 @@ promise
 
 /**
  * Câu hỏi 4: VD trên sẽ in ra như thế nào?
+ * Sẽ trả ra là "hello world!"
  */
 
 /**
  * VD ứng dụng trong Vuejs
  */
-function loadDataFromAPI {
+function loadDataFromAPI() {
     if (this.loading) return  // Nếu đang loading thì ko cần làm gì, phòng trường hợp người dùng click đúp thì sẽ ko bị gọi API 2 lần
     this.loading = true  // Hiển thị loading
 
@@ -164,6 +169,9 @@ function loadDataFromAPI {
  * Hãy viết code để Api3 nhận kết quả của Api2, Api2 nhận kết quả của Api1
  */
 
+// ----------------------------------------------------------------------------------
+// Bài làm
+
 function getRandomNumber (choices) {
     const index = Math.floor(Math.random() * choices.length)
     return choices[index]
@@ -178,6 +186,61 @@ function wait (ms) {
         setTimeout(resolve, ms)
     })
 }
+
+function api1(){
+    return new Promise(resolve => {
+        setTimeout(() => {
+        const api1Res = getRandomNumber([1, 2, 3, 4, 5])
+        console.log("API 1 result is: ", api1Res)
+        console.log("API 1 is done!")
+        console.log("---------------------------")
+        resolve(api1Res)
+        }, getRandomTime())
+    })
+}
+
+function api2(api1Res){
+    return new Promise(resolve => {
+        setTimeout(() => {
+        const randomNumber = getRandomNumber([1, 2, 3, 4, 5])
+        console.log('API 1 result is: ', api1Res)
+        console.log('API 2 result is: ', randomNumber)
+        const api2Res = api1Res + randomNumber
+        console.log("Total number of API 1 and API 2 is: ", api2Res)
+        console.log("API 2 is done!")
+        console.log("---------------------------")
+        resolve(api2Res)
+        }, getRandomTime())
+    })
+}
+
+function api3(api2Res){
+    return new Promise(resolve => {
+        setTimeout(() => {
+        const randomNumber = getRandomNumber([1, 2, 3, 4, 5])
+        console.log('API 2 result is: ', api2Res)
+        console.log('API 3 result is: ', randomNumber)
+        const api3Res = api2Res + randomNumber
+        console.log("Total number of API 2 and API 3 is: ", api3Res)
+        console.log("API 3 is done!")
+        console.log("---------------------------")
+        resolve()
+        }, getRandomTime())
+    })
+}
+
+api1()
+    .then(api1Res => {
+        return api2(api1Res)
+    })
+    .then(api2Res => {
+        return api3(api2Res)
+    })
+    .then(() => {
+        console.log('DONE!')
+    })
+
+// ------------------------------------------------------------------------------------------
 
 function Api1 () {
     return new Promise((resolve, reject) => {
