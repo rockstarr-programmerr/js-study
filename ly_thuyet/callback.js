@@ -13,9 +13,11 @@
 //     }, 2000);
 // }
 
+// callAPI(123, onFinish)
+
 /**
  * Câu hỏi 1: Khi chạy hàm `callAPI`, điều gì sẽ xảy ra?
- * Sau 2 dây thì sẽ chạy hàm onFinish
+ * Sau 2s thì sẽ chạy hàm onFinish
  */
 
 /**
@@ -35,27 +37,25 @@
  */
 
 // function api_1() {
-//   console.log('API 1 DONE!')
+//   setTimeout(() => {
+//     console.log('API 1 DONE!')
+//   }, 1000)
 // }
 // function api_2() {
-//   console.log('API 2 DONE!')
+//   setTimeout(() => {
+//     console.log('API 2 DONE!')
+//   }, 2000)
 // }
 // function api_3() {
-//   console.log('API 3 DONE!')
+//   setTimeout(() => {
+//     console.log('API 3 DONE!')
+//   }, 3000)
 // }
 
-// function callApi(api_1, api_2, api_3) {
-//   setTimeout(() => {
-//     api_1()
-//   }, 1000);
-
-//   setTimeout(() => {
-//     api_2()
-//   }, 3000);
-  
-//   setTimeout(() => {
-//     api_3()
-//   }, 6000);
+// function callApi(a, b, c) {
+//   setTimeout(a, 1000)
+//   setTimeout(b, 3000)
+//   setTimeout(c, 6000)
 // }
 
 // callApi(api_1, api_2, api_3);
@@ -71,30 +71,48 @@
  *      + Gọi API_2, log ra kết quả
  *      + Gọi API_3, log ra kết quả
  */
-function api_1() {
-  let arr = [1, 2, 3, 4];
-  let key = Math.floor(Math.random() * arr.length);
-  let result = arr[key];
-  console.log(`So ngau  nhien: ${result}`);
-  return result;
-}
-function api_2() {
-  let number_api_1 = api_1();
-  let arr = [5, 6, 7, 8];
-  let key = Math.floor(Math.random() * arr.length);
-  let result = arr[key];
-  console.log(`Ket qua api 2: ${number_api_1} + ${result} = `, number_api_1 + result);
-  return number_api_1 + result;
-}
-function api_3() {
-  let number_api_2 = api_2();
-  let arr = [9, 10, 11, 12];
-  let key = Math.floor(Math.random() * arr.length);
-  let result = arr[key];
-  console.log(`Ket qua api 3: ${number_api_2} + ${result} = `, number_api_2 + result);
-}
-function test() {
-  setTimeout(api_3, 1000);
+
+const randomNumber = (array) => {
+  const number = Math.floor(Math.random() * array.length);
+  return array[number];
 }
 
-test();
+const randomTime = () => {
+  return randomNumber([1, 2, 3, 4]) * 1000;
+}
+
+const api1 = (cb) => {
+  const randomTimeApi = randomTime();
+  setTimeout(() => {
+    const result = randomNumber([1, 2, 3, 4]);
+    console.log(`api 1 ket qua ${result} thoi gian ${randomTimeApi}s`);
+    cb(result);
+  }, randomTimeApi);
+}
+
+const api2 = (api1_res, cb) => {
+  const randomTimeApi = randomTime();
+  setTimeout(() => {
+    const number = randomNumber([5, 6, 7, 8]);
+    console.log(`so api 2 => ${number}`);
+    const result = api1_res + number;
+    console.log(`api 2 ket qua ${result} thoi gian ${randomTimeApi}s`);
+    cb(result);
+  }, randomTimeApi);
+}
+
+const api3 = (api2_res) => {
+  const randomTimeApi = randomTime();
+  setTimeout(() => {
+    const number = randomNumber([9, 10, 11, 12]);
+    console.log(`so api 3 => ${number}`);
+    const result = api2_res + number;
+    console.log(`api 3 ket qua ${result} thoi gian ${randomTimeApi}s`);
+  }, randomTimeApi);
+}
+
+const call = (api1_res) => {
+  api2(api1_res, api3)
+}
+
+api1(call);
