@@ -8,7 +8,7 @@
 /**
  * Câu hỏi 1: JS là đồng bộ hay bất đồng bộ?
  */
-
+  Mang cả 2 tính chất đồng bộ và bất đồng bộ
 
 /**
  * Event loop
@@ -69,7 +69,7 @@ promise.finally(() => {
 /**
  * Câu hỏi 2: VD trên sẽ in ra như thế nào?
  */
-
+ hàm trả về 2 giá trị Something failed! và This is always called.
 /**
  * Nối các callback (chaining)
  * 
@@ -104,6 +104,7 @@ promise
 /**
  * Câu hỏi 3: VD trên sẽ in ra như thế nào?
  */
+in ra 3 giá tri: my name và is Trung. và Done! 
 
 /**
  * CHÚ Ý:
@@ -131,7 +132,7 @@ promise
 /**
  * Câu hỏi 4: VD trên sẽ in ra như thế nào?
  */
-
+in ra: world!
 /**
  * VD ứng dụng trong Vuejs
  */
@@ -157,7 +158,8 @@ function loadDataFromAPI {
 /**
  * Bài tập 2:
  * 
- * CHÚ Ý: không copy paste đề bài vào bài làm của mình, thay vào đó hãy tự gõ lại để luyện tập
+ * CHÚ Ý: không copy paste đề bài vào bài làm của mình, thay vào đó hãy 
+ *tự gõ lại để luyện tập
  * 
  * Cho 4 API như dưới đây.
  * Tương tự bài callback:
@@ -227,6 +229,50 @@ function Api3 (api2Res) {
         }
     })
 }
+
+
+
+function getRandomNumber (choices) {
+    const index = Math.floor(Math.random() * choices.length)
+    return choices[index]
+}
+
+function getRandomTime () {
+    return getRandomNumber([1, 2, 3, 4]) * 1000
+}
+
+function API_1 (callback) {
+    setTimeout(() => {
+        const response = getRandomNumber([1, 2, 3, 4]);
+        console.log('API 1:', response)
+        callback(response);
+    }, getRandomTime())
+}
+
+function API_2 (api1Res, callback) {
+    setTimeout(() => {
+        const number = getRandomNumber([5, 6, 7, 8]);
+        console.log('API 2 random number:', number)
+        const response = api1Res + number;
+        console.log('API 2:', response);
+        callback(response);
+    }, getRandomTime())
+}
+
+function API_3 (api2Res) {
+    setTimeout(() => {
+        const number = getRandomNumber([9, 10, 11, 12]);
+        console.log('API 3 random number:', number)
+        const response = api2Res + number;
+        console.log('API 3:', response)
+    }, getRandomTime())
+}
+
+function callAPI2AndAPI3 (api1Res) {
+    API_2(api1Res, API_3)
+}
+
+API_1(callAPI2AndAPI3)
 
 /**
  * Promise.all
