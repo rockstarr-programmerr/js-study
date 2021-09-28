@@ -7,8 +7,8 @@
 
 /**
  * Câu hỏi 1: JS là đồng bộ hay bất đồng bộ?
+ * Js là bất đồng bộ
  */
-
 
 /**
  * Event loop
@@ -68,6 +68,9 @@ promise.finally(() => {
 
 /**
  * Câu hỏi 2: VD trên sẽ in ra như thế nào?
+ * Ví dụ trên sẽ in ra 2 kết quả
+ * 1 hello internet
+ * 2 This is always called.
  */
 
 /**
@@ -103,6 +106,8 @@ promise
 
 /**
  * Câu hỏi 3: VD trên sẽ in ra như thế nào?
+ * Sẽ in ra là Heloo my name is Trung.
+ * và  Done
  */
 
 /**
@@ -130,6 +135,7 @@ promise
 
 /**
  * Câu hỏi 4: VD trên sẽ in ra như thế nào?
+ * Sẽ ra hello world!
  */
 
 /**
@@ -220,6 +226,55 @@ function Api3 (api2Res) {
                     console.log('Api3 random number:', num)
                     const result = api2Res + num
                     console.log('Api3 result:', result)
+                    resolve(result)
+                })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+function Ha1 () {
+    return new Promise((resolve, reject) => {
+        try {
+            wait(getRandomTime())
+                .then(() => {
+                    const result = getRandomNumber([1, 2, 3, 4])
+                    console.log(result)
+                    resolve(result)
+                })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+function Ha2 (api1Res) {
+    return new Promise((resolve, reject) => {
+        try {
+            wait(getRandomTime())
+                .then(() => {
+                    const num = getRandomNumber([5, 6, 7, 8])
+                    console.log(num)
+                    const result = api1Res + num
+                    console.log(result)
+                    resolve(result)
+                })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+function Ha3 (api2Res) {
+    return new Promise((resolve, reject) => {
+        try {
+            wait(getRandomTime())
+                .then(() => {
+                    const num = getRandomNumber([9, 10, 11, 12])
+                    console.log(num)
+                    const result = api2Res + num
+                    console.log(result)
                     resolve(result)
                 })
         } catch (error) {
