@@ -41,7 +41,7 @@ const promise = new Promise((resolve, reject) => {
             resolve('hello');
         }, 2000)   
     } catch (error) {
-        reject(error);
+        reject('task failed');
     }
 })
 
@@ -77,17 +77,30 @@ promise.finally(() => {
  * nên có thể gọi chúng nối tiếp nhau
  */
 // VD:
+function callback1 (result) {
+    result += ' my name'
+    return result
+}
+
+function callback2 (result) {
+    return Promise((resolve, reject) => {
+        result += ' my name'
+        resolve(result)
+    })
+}
+
+
 promise
     .then(result => {
         result += ' my name'
         return result
     })
-    .then(result => {
-        result += ' is Trung.'
-        return result
+    .then(result1 => {
+        result1 += ' is Trung.'
+        return result1
     })
-    .then(result => {
-        console.log(result)
+    .then(result2 => {
+        console.log(result2)
     })
     .catch(error => {
         console.error(error)
@@ -97,6 +110,9 @@ promise
     .then(message => {
         console.error(message)
     })
+    .then(response => {
+        console.log(response)
+    })
     .finally(() => {
         console.log('Done!')
     })
@@ -104,7 +120,7 @@ promise
 /**
  * Câu hỏi 3: VD trên sẽ in ra như thế nào?
  */
-in ra 3 giá tri: my name và is Trung. và Done! 
+// in ra 3 giá tri: hello my name và is Trung. và Done! 
 
 /**
  * CHÚ Ý:
@@ -153,6 +169,18 @@ function loadDataFromAPI {
             // Dù thành công hay thất bại thì đều dừng loading
             this.loading = false
         })
+}
+
+function get () {
+    return new Promise((resolve, reject) => {
+        const response = callAPI()
+        const statusCode = response.statusCode
+        if (statusCode >= 200 && statusCode <= 299) {
+            resolve(response)
+        } else {
+            reject(response)
+        }
+    })
 }
 
 /**
@@ -232,47 +260,47 @@ function Api3 (api2Res) {
 
 
 
-function getRandomNumber (choices) {
-    const index = Math.floor(Math.random() * choices.length)
-    return choices[index]
-}
+// function getRandomNumber (choices) {
+//     const index = Math.floor(Math.random() * choices.length)
+//     return choices[index]
+// }
 
-function getRandomTime () {
-    return getRandomNumber([1, 2, 3, 4]) * 1000
-}
+// function getRandomTime () {
+//     return getRandomNumber([1, 2, 3, 4]) * 1000
+// }
 
-function API_1 (callback) {
-    setTimeout(() => {
-        const response = getRandomNumber([1, 2, 3, 4]);
-        console.log('API 1:', response)
-        callback(response);
-    }, getRandomTime())
-}
+// function API_1 (callback) {
+//     setTimeout(() => {
+//         const response = getRandomNumber([1, 2, 3, 4]);
+//         console.log('API 1:', response)
+//         callback(response);
+//     }, getRandomTime())
+// }
 
-function API_2 (api1Res, callback) {
-    setTimeout(() => {
-        const number = getRandomNumber([5, 6, 7, 8]);
-        console.log('API 2 random number:', number)
-        const response = api1Res + number;
-        console.log('API 2:', response);
-        callback(response);
-    }, getRandomTime())
-}
+// function API_2 (api1Res, callback) {
+//     setTimeout(() => {
+//         const number = getRandomNumber([5, 6, 7, 8]);
+//         console.log('API 2 random number:', number)
+//         const response = api1Res + number;
+//         console.log('API 2:', response);
+//         callback(response);
+//     }, getRandomTime())
+// }
 
-function API_3 (api2Res) {
-    setTimeout(() => {
-        const number = getRandomNumber([9, 10, 11, 12]);
-        console.log('API 3 random number:', number)
-        const response = api2Res + number;
-        console.log('API 3:', response)
-    }, getRandomTime())
-}
+// function API_3 (api2Res) {
+//     setTimeout(() => {
+//         const number = getRandomNumber([9, 10, 11, 12]);
+//         console.log('API 3 random number:', number)
+//         const response = api2Res + number;
+//         console.log('API 3:', response)
+//     }, getRandomTime())
+// }
 
-function callAPI2AndAPI3 (api1Res) {
-    API_2(api1Res, API_3)
-}
+// function callAPI2AndAPI3 (api1Res) {
+//     API_2(api1Res, API_3)
+// }
 
-API_1(callAPI2AndAPI3)
+// API_1(callAPI2AndAPI3)
 
 /**
  * Promise.all
